@@ -1,0 +1,2 @@
+crawl:
+	scrapy crawl imdb
