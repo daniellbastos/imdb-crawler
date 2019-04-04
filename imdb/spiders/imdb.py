@@ -13,7 +13,7 @@ class IMDbSpider(scrapy.Spider):
 
         next_page = response.css('div.desc a.lister-page-next::attr(href)').extract_first()
         if next_page is not None:
-            yield response.follow(next_page, self.parse)
+           yield response.follow(next_page, self.parse)
 
     def sanitize(self, row):
         data = {}
@@ -27,5 +27,5 @@ class IMDbSpider(scrapy.Spider):
 
         data['ratings_imdb'] = row.css('div.ratings-bar div.ratings-imdb-rating strong::text').extract_first()
         data['description'] = ' '.join([i.strip() for i in row.css('p.text-muted::text').extract() if i.replace('\n','').strip()])
-        data['image'] = row.css('div.lister-item-image a img::attr(src)').extract_first()
+        data['image'] = row.css('div.lister-item-image a img::attr(loadlate)').extract_first().replace('V1_UX67_CR0,0,67,98_AL', 'V1_UX500_CR0,0,500_AL')
         return data
